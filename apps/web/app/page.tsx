@@ -1,17 +1,15 @@
-import { Button } from "@repo/ui";
 import { client } from "../../server/src/index";
 import React from "react";
 
 export default async function Home() {
-  const res = client.v1.users.$get();
-  const data = await (await res).json();
-  console.log("ttttt");
+  const res = client.employees.$get();
+  const employees = await (await res).json();
   return (
-    <>
-      <Button>/vi/users post res is {data.message}</Button>
-      <h1 className="text-3xl font-bold underline text-blue-700">
-        Hello world!
-      </h1>
-    </>
+    <div>
+      <h1 className="text-3xl font-bold ">employees list</h1>
+      {employees.results.map((employee) => (
+        <div key={employee.id}>{employee.name}</div>
+      ))}
+    </div>
   );
 }

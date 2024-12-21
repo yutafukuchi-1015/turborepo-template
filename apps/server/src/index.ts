@@ -1,20 +1,10 @@
 import { Hono } from "hono";
 import { hc } from "hono/client";
-import { AnyZodObject, z } from "zod";
-import { zValidator } from "@hono/zod-validator";
+import { employees } from "./router/employees";
 
-const app = new Hono();
+const app = new Hono().route("/employees", employees);
 
-const schema = z.object({
-  id: z.number(),
-  name: z.string(),
-});
-
-const routes = app.get("/v1/users", async (c) => {
-  return c.json({ message: `test` });
-});
-
-export type AppType = typeof routes;
+export type AppType = typeof app;
 export const client = hc<AppType>("http://localhost:8080/");
 
 const port = 8080;
