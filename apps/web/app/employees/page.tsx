@@ -1,5 +1,5 @@
-import { Button } from "@repo/ui";
 import React from "react";
+import { Button } from "@repo/ui";
 
 export default async function Home() {
   return (
