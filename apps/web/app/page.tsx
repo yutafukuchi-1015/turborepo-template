@@ -8,7 +8,9 @@ export default async function Home() {
     <div>
       <h1 className="text-3xl font-bold ">employees list</h1>
       {employees.results.map((employee) => (
-        <div key={employee.id}>{employee.name}</div>
+        <div key={employee.id}>
+          {employee.id} {employee.name}
+        </div>
       ))}
     </div>
   );

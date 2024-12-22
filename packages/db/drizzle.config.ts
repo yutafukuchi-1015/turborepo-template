@@ -1,11 +1,13 @@
 import "dotenv/config";
-import { defineConfig } from "drizzle-kit";
+import { Config, defineConfig } from "drizzle-kit";
 
 export default defineConfig({
   out: "./drizzle",
-  schema: "./src/db/schema.ts",
-  dialect: "sqlite",
+  schema: "./src/schema/index.ts",
+  dialect: "postgresql",
   dbCredentials: {
-    url: process.env.DB_FILE_NAME!,
+    url: "postgres://postgres:postgres@localhost:5432/postgres", // FIXME use .env
+    user: "postgres",
+    password: "postgres",
   },
-});
+}) satisfies Config;
