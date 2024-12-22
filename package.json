@@ -18,6 +18,8 @@
   },
   "workspaces": [
     "apps/*",
+    "typescript-config/*",
+    "eslint-config/*",
     "packages/*"
   ]
 }
