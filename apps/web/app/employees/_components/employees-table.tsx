@@ -1,22 +1,14 @@
-"use client";
-
 import React from "react";
 import {
   Button,
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  Menubar,
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@repo/ui";
+import Link from "next/link";
 
 export const EmployeesTable = ({
   employees,
@@ -41,30 +33,9 @@ export const EmployeesTable = ({
             <TableCell>{employee.name}</TableCell>
             <TableCell>test</TableCell>
             <TableCell>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => console.log(employee)}
-                  >
-                    View Detail
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>{employee.name}</DialogTitle>
-                  </DialogHeader>
-                  <div className="mt-4">
-                    <p>
-                      <strong>ID:</strong> {employee.id}
-                    </p>
-                    <p>
-                      <strong>Department:</strong> department
-                    </p>
-                  </div>
-                </DialogContent>
-              </Dialog>
+              <Link href={"/"}>
+                <Button>view</Button>
+              </Link>
             </TableCell>
           </TableRow>
         ))}
