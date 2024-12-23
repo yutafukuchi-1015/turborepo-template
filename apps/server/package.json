@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "hono": "^4.6.14",
+    "drizzle-orm": "^0.38.2",
     "@repo/db": "workspace:*"
   },
   "devDependencies": {

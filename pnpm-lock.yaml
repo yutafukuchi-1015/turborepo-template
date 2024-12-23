@@ -57,6 +57,9 @@ importers:
       '@repo/db':
         specifier: workspace:*
         version: link:../../packages/db
+      drizzle-orm:
+        specifier: ^0.38.2
+        version: 0.38.2(@libsql/client@0.14.0(bufferutil@4.0.7)(utf-8-validate@6.0.3))(@opentelemetry/api@1.9.0)(@types/pg@8.11.10)(@types/react@18.3.1)(better-sqlite3@11.1.2)(pg@8.13.1)(react@19.0.0)
       hono:
         specifier: ^4.6.14
         version: 4.6.14
