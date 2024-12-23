@@ -3,6 +3,7 @@ import {
   Button,
   Table,
   TableBody,
+  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -17,13 +18,13 @@ export const EmployeesTable = ({
 }) => {
   return (
     <Table>
-      {/* <TableCaption>Employee List</TableCaption> */}
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">ID</TableHead>
           <TableHead>Name</TableHead>
           <TableHead>Department</TableHead>
           <TableHead>Detail</TableHead>
+          <TableHead>Open Detail in new tab</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -33,7 +34,12 @@ export const EmployeesTable = ({
             <TableCell>{employee.name}</TableCell>
             <TableCell>test</TableCell>
             <TableCell>
-              <Link href={"/"}>
+              <Link href={`/employees/${employee.id}`}>
+                <Button>view</Button>
+              </Link>
+            </TableCell>
+            <TableCell>
+              <Link target="_blank" href={`/employees/${employee.id}`}>
                 <Button>view</Button>
               </Link>
             </TableCell>

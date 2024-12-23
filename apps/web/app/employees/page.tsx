@@ -2,12 +2,12 @@ import React from "react";
 import { client } from "@/server/src/index";
 import { EmployeesTable } from "./_components/employees-table";
 
-export default async function Home() {
+export default async function EmployeesPage() {
   const res = client.employees.$get();
   const employees = await (await res).json();
   return (
     <div>
-      <h1 className="text-3xl font-bold ">employees list</h1>
+      <h1>Employees List</h1>
       <EmployeesTable employees={employees} />
     </div>
   );
