@@ -10,11 +10,12 @@ import {
   TableRow,
 } from "@repo/ui";
 import Link from "next/link";
+import { Employees } from "@repo/db/src/schema/employees/validation";
 
 export const EmployeesTable = ({
   employees,
 }: {
-  employees: { results: { id: number; name: string }[] };
+  employees: { results: Employees[] };
 }) => {
   return (
     <Table>
