@@ -4,16 +4,22 @@ import React, { useActionState } from "react";
 import { Button, Input, Label } from "@repo/ui";
 import { Employees } from "@repo/db/src/schema/employees/validation";
 import { updateEmployee, deleteEmployee } from "./actions";
+import { z } from "zod";
 
 export const Form = ({ employee }: { employee: Employees }) => {
   //FIXME error handling using state
-  const [state, formAction] = useActionState<{ errors: string[] }, FormData>(
-    (state, formData) => updateEmployee(employee.id, state, formData),
+  const [state, formAction] = useActionState<
     {
-      errors: [],
-    }
-  );
-  const { id, name } = employee;
+      errors:
+        | z.ZodError<{
+            name: string;
+          }>
+        | undefined;
+    },
+    FormData
+  >((state, formData) => updateEmployee(employee.id, state, formData), {
+    errors: undefined,
+  });
 
   return (
     <div className="space-y-4">
@@ -26,7 +32,7 @@ export const Form = ({ employee }: { employee: Employees }) => {
         <div className="grid grid-cols-1 gap-4">
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
-            <Input id="name" name="name" defaultValue={name} />
+            <Input id="name" name="name" defaultValue={employee.name} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="department">Department</Label>

@@ -2,23 +2,33 @@
 import { client } from "@/server/src";
 import { insertEmployeesSchema } from "@repo/db/src/schema/employees/validation";
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 
 export const createEmployee = async (
-  prevState: { name: string } | undefined,
+  prevState: {
+    errors:
+      | z.ZodError<{
+          name: string;
+        }>
+      | undefined;
+  },
   formData: FormData
 ) => {
-  const schema = insertEmployeesSchema;
+  const schema = z.object({
+    name: z.string().min(1),
+  });
   const parse = schema.safeParse({
     name: formData.get("name"),
   });
   if (!parse.success) {
-    return { name: "Failed" }; // FIXME
+    return { errors: parse.error };
   }
   const data = parse.data;
   try {
     await client.employees.$post({ json: { name: data.name } });
     revalidatePath("/employees");
+    return { errors: undefined };
   } catch (error) {
-    return { name: "Failed" }; // FIXME
+    throw new Error("Failed to create employee");
   }
 };

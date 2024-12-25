@@ -4,10 +4,22 @@ import React, { useActionState } from "react";
 import { Button, Input, Label } from "@repo/ui";
 import { Employees } from "@repo/db/src/schema/employees/validation";
 import { createEmployee } from "./actions";
+import { z } from "zod";
 
 export const Form = () => {
   //FIXME error handling using state
-  const [state, formAction] = useActionState(createEmployee, undefined);
+  const [state, formAction] = useActionState<
+    {
+      errors:
+        | z.ZodError<{
+            name: string;
+          }>
+        | undefined;
+    },
+    FormData
+  >((state, formData) => createEmployee(state, formData), {
+    errors: undefined,
+  });
   return (
     <div className="space-y-4">
       <h1 className="text-2xl">New Employee</h1>

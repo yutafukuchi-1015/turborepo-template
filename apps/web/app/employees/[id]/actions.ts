@@ -6,9 +6,15 @@ import { redirect } from "next/navigation";
 
 export const updateEmployee = async (
   id: number,
-  prevState: { errors: string[] },
+  prevState: {
+    errors:
+      | z.ZodError<{
+          name: string;
+        }>
+      | undefined;
+  },
   formData: FormData
-): Promise<{ errors: string[] }> => {
+) => {
   const schema = z.object({
     name: z.string().min(1),
   });
@@ -18,7 +24,7 @@ export const updateEmployee = async (
   });
 
   if (!parse.success) {
-    throw new Error("Invalid input");
+    return { errors: parse.error };
   }
 
   try {
@@ -27,7 +33,7 @@ export const updateEmployee = async (
       param: { id: String(id) },
     });
     revalidatePath("/employees");
-    return { errors: [] };
+    return { errors: undefined };
   } catch (error) {
     throw new Error("Failed to update employee");
   }
