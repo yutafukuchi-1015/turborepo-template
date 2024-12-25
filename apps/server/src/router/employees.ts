@@ -56,4 +56,11 @@ export const employees = new Hono()
         .where(eq(employeesTable.id, Number(id)));
       return c.json(res);
     }
-  );
+  )
+  .delete("/:id", async (c) => {
+    const { id } = c.req.param();
+    const res = await db
+      .delete(employeesTable)
+      .where(eq(employeesTable.id, Number(id)));
+    return c.status(200);
+  });

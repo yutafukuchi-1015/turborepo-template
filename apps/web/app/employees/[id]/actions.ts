@@ -29,3 +29,8 @@ export const updateEmployee = async (
     return;
   }
 };
+
+export const deleteEmployee = async (id: number) => {
+  await client.employees[":id"].$delete({ param: { id: String(id) } });
+  revalidatePath("/employees");
+};
