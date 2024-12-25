@@ -6,6 +6,7 @@ import { Employees } from "@repo/db/src/schema/employees/validation";
 import { createEmployee } from "./actions";
 
 export const Form = () => {
+  //FIXME error handling using state
   const [state, formAction] = useActionState(createEmployee, undefined);
   return (
     <div className="space-y-4">

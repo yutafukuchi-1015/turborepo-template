@@ -6,13 +6,15 @@ import { Employees } from "@repo/db/src/schema/employees/validation";
 import { updateEmployee, deleteEmployee } from "./actions";
 
 export const Form = ({ employee }: { employee: Employees }) => {
-  const [state, formAction] = useActionState<
-    { name: string; id: number },
-    FormData
-  >((state, formData) => updateEmployee(employee.id, state, formData), {
-    id: employee.id,
-    name: employee.name,
-  });
+  //FIXME error handling using state
+  const [state, formAction] = useActionState<{ errors: string[] }, FormData>(
+    (state, formData) => updateEmployee(employee.id, state, formData),
+    {
+      errors: [],
+    }
+  );
+  const { id, name } = employee;
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between">
@@ -24,7 +26,7 @@ export const Form = ({ employee }: { employee: Employees }) => {
         <div className="grid grid-cols-1 gap-4">
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
-            <Input id="name" name="name" />
+            <Input id="name" name="name" defaultValue={name} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="department">Department</Label>

@@ -6,9 +6,9 @@ import { redirect } from "next/navigation";
 
 export const updateEmployee = async (
   id: number,
-  prevState: { name: string; id: number },
+  prevState: { errors: string[] },
   formData: FormData
-): Promise<{ name: string; id: number }> => {
+): Promise<{ errors: string[] }> => {
   const schema = z.object({
     name: z.string().min(1),
   });
@@ -27,7 +27,7 @@ export const updateEmployee = async (
       param: { id: String(id) },
     });
     revalidatePath("/employees");
-    return { id, name: parse.data.name };
+    return { errors: [] };
   } catch (error) {
     throw new Error("Failed to update employee");
   }

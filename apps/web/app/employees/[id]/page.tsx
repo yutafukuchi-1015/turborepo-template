@@ -12,6 +12,5 @@ export default async function EmployeesPage({
     param: { id: id },
   });
   const employee = await res.json();
-
   return <Form employee={employee} />;
 }
