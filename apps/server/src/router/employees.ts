@@ -7,19 +7,10 @@ import { employees as employeesTable } from "@repo/db/src/schema";
 
 export const employees = new Hono()
   .get("/", async (c) => {
-    // try {
     const results = await db.select().from(employeesTable);
     return c.json({
       results,
     });
-    // } catch (error: any) {
-    //   if (error instanceof Error) {
-    //     console.error({ message: "エラー", errorMessage: error.message });
-    //     return c.body("", 500);
-    //   }
-    //   console.error({ message: "不明なエラー" });
-    //   return c.body("", 500);
-    // }
   })
   .get("/:id", async (c) => {
     const { id } = c.req.param();
@@ -43,8 +34,8 @@ export const employees = new Hono()
     ),
     async (c) => {
       const body = await c.req.valid("json");
-      await db.insert(employeesTable).values(body);
-      return c.status(200);
+      const res = await db.insert(employeesTable).values(body);
+      return c.json(res);
     }
   )
   .put(
