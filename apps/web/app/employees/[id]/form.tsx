@@ -2,20 +2,18 @@
 
 import React, { useActionState } from "react";
 import { Button, Input, Label } from "@repo/ui";
-import { Employees } from "@repo/db/src/schema/employees/validation";
+import {
+  Employees,
+  InsertEmployees,
+  insertEmployeesSchema,
+} from "@repo/db/src/schema/employees/validation";
 import { updateEmployee, deleteEmployee } from "./actions";
-import { z } from "zod";
+import { z, ZodError } from "zod";
 
 export const Form = ({ employee }: { employee: Employees }) => {
   //FIXME error handling using state
   const [state, formAction] = useActionState<
-    {
-      errors:
-        | z.ZodError<{
-            name: string;
-          }>
-        | undefined;
-    },
+    { errors: ZodError<Pick<InsertEmployees, "name">> | undefined },
     FormData
   >((state, formData) => updateEmployee(employee.id, state, formData), {
     errors: undefined,

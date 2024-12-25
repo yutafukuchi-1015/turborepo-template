@@ -1,27 +1,24 @@
 "use server";
 import { client } from "@/server/src";
-import { insertEmployeesSchema } from "@repo/db/src/schema/employees/validation";
+import {
+  InsertEmployees,
+  insertEmployeesSchema,
+} from "@repo/db/src/schema/employees/validation";
 import { revalidatePath } from "next/cache";
-import { z } from "zod";
+import { z, ZodError } from "zod";
 
 export const createEmployee = async (
   prevState: {
-    errors:
-      | z.ZodError<{
-          name: string;
-        }>
-      | undefined;
+    errors: ZodError<Pick<InsertEmployees, "name">> | undefined;
   },
   formData: FormData
-) => {
-  const schema = z.object({
-    name: z.string().min(1),
-  });
+): Promise<{ errors: ZodError<{ name: string }> | undefined }> => {
+  const schema = insertEmployeesSchema.pick({ name: true });
   const parse = schema.safeParse({
     name: formData.get("name"),
   });
   if (!parse.success) {
-    return { errors: parse.error };
+    return { errors: parse.error as ZodError<Pick<InsertEmployees, "name">> };
   }
   const data = parse.data;
   try {
