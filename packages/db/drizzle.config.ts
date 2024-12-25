@@ -6,8 +6,6 @@ export default defineConfig({
   schema: "./src/schema/index.ts",
   dialect: "postgresql",
   dbCredentials: {
-    url: "postgres://postgres:postgres@localhost:5432/postgres", // FIXME use .env
-    user: "postgres",
-    password: "postgres",
+    url: process.env.DB_URL,
   },
 }) satisfies Config;
