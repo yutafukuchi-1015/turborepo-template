@@ -2,35 +2,43 @@
 import { client } from "@/server/src";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export const updateEmployee = async (
   id: number,
-  prevState: { name: string; id: number } | undefined,
+  prevState: { name: string; id: number },
   formData: FormData
-) => {
+): Promise<{ name: string; id: number }> => {
   const schema = z.object({
-    name: z.string(),
+    name: z.string().min(1),
   });
+
   const parse = schema.safeParse({
     name: formData.get("name"),
   });
+
   if (!parse.success) {
-    return;
+    throw new Error("Invalid input");
   }
-  const data = parse.data;
+
   try {
     await client.employees[":id"].$put({
-      json: { name: data.name },
+      json: parse.data,
       param: { id: String(id) },
     });
     revalidatePath("/employees");
-    return { id: id, name: data.name };
+    return { id, name: parse.data.name };
   } catch (error) {
-    return;
+    throw new Error("Failed to update employee");
   }
 };
 
 export const deleteEmployee = async (id: number) => {
-  await client.employees[":id"].$delete({ param: { id: String(id) } });
-  revalidatePath("/employees");
+  try {
+    await client.employees[":id"].$delete({ param: { id: String(id) } });
+    revalidatePath("/employees");
+    redirect("/employees");
+  } catch (error) {
+    throw new Error("Failed to delete employee");
+  }
 };

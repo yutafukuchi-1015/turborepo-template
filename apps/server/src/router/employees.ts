@@ -8,9 +8,7 @@ import { employees as employeesTable } from "@repo/db/src/schema";
 export const employees = new Hono()
   .get("/", async (c) => {
     const results = await db.select().from(employeesTable);
-    return c.json({
-      results,
-    });
+    return c.json({ results });
   })
   .get("/:id", async (c) => {
     const { id } = c.req.param();
@@ -19,9 +17,11 @@ export const employees = new Hono()
       .from(employeesTable)
       .where(eq(employeesTable.id, Number(id)));
 
-    return c.json({
-      ...result[0]!, //FIXME nullの場合が想定できてない. try/catch?
-    });
+    if (!result[0]) {
+      return c.json({ error: "Employee not found" }, 404);
+    }
+
+    return c.json({ result: result[0] });
   })
   .post(
     "/",
@@ -59,8 +59,6 @@ export const employees = new Hono()
   )
   .delete("/:id", async (c) => {
     const { id } = c.req.param();
-    const res = await db
-      .delete(employeesTable)
-      .where(eq(employeesTable.id, Number(id)));
-    return c.status(200);
+    await db.delete(employeesTable).where(eq(employeesTable.id, Number(id)));
+    return c.json({ success: true });
   });

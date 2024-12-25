@@ -6,13 +6,13 @@ import { Employees } from "@repo/db/src/schema/employees/validation";
 import { updateEmployee, deleteEmployee } from "./actions";
 
 export const Form = ({ employee }: { employee: Employees }) => {
-  const [state, formAction] = useActionState(
-    updateEmployee.bind(null, employee.id),
-    {
-      id: employee.id,
-      name: employee.name,
-    }
-  );
+  const [state, formAction] = useActionState<
+    { name: string; id: number },
+    FormData
+  >((state, formData) => updateEmployee(employee.id, state, formData), {
+    id: employee.id,
+    name: employee.name,
+  });
   return (
     <div className="space-y-4">
       <div className="flex justify-between">
