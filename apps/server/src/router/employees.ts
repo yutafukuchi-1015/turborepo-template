@@ -18,10 +18,10 @@ export const employees = new Hono()
       .where(eq(employeesTable.id, Number(id)));
 
     if (!result[0]) {
-      return c.json({ error: "Employee not found" }, 404);
+      throw new Error("Employee not found");
     }
 
-    return c.json({ result: result[0] });
+    return c.json({ ...result[0] });
   })
   .post(
     "/",
