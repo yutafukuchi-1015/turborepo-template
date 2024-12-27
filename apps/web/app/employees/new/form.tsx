@@ -7,13 +7,12 @@ import {
   InsertEmployees,
 } from "@repo/db/src/schema/employees/validation";
 import { createEmployee } from "./actions";
-import { z, ZodError } from "zod";
+import { z, ZodError, ZodIssue } from "zod";
 
 export const Form = () => {
-  //FIXME error handling using state
   const [state, formAction] = useActionState<
     {
-      errors: ZodError<Pick<InsertEmployees, "name">> | undefined;
+      errors: ZodIssue[] | undefined;
     },
     FormData
   >((state, formData) => createEmployee(state, formData), {

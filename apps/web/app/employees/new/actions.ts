@@ -5,20 +5,20 @@ import {
   insertEmployeesSchema,
 } from "@repo/db/src/schema/employees/validation";
 import { revalidatePath } from "next/cache";
-import { z, ZodError } from "zod";
+import { z, ZodError, ZodIssue } from "zod";
 
 export const createEmployee = async (
   prevState: {
-    errors: ZodError<Pick<InsertEmployees, "name">> | undefined;
+    errors: ZodIssue[] | undefined;
   },
   formData: FormData
-): Promise<{ errors: ZodError<{ name: string }> | undefined }> => {
+): Promise<{ errors: ZodIssue[] | undefined }> => {
   const schema = insertEmployeesSchema.pick({ name: true });
   const parse = schema.safeParse({
     name: formData.get("name"),
   });
   if (!parse.success) {
-    return { errors: parse.error as ZodError<Pick<InsertEmployees, "name">> };
+    return { errors: parse.error.errors as ZodIssue[] };
   }
   const data = parse.data;
   try {

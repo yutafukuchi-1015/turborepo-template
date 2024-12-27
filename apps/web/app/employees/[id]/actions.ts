@@ -1,6 +1,6 @@
 "use server";
 import { client } from "@/server/src";
-import { z, ZodError } from "zod";
+import { z, ZodError, ZodIssue } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import {
@@ -10,9 +10,9 @@ import {
 
 export const updateEmployee = async (
   id: number,
-  prevState: { errors: ZodError<Pick<InsertEmployees, "name">> | undefined },
+  prevState: { errors: ZodIssue[] | undefined },
   formData: FormData
-): Promise<{ errors: ZodError<{ name: string }> | undefined }> => {
+): Promise<{ errors: ZodIssue[] | undefined }> => {
   const schema = insertEmployeesSchema.pick({ name: true });
 
   const parse = schema.safeParse({
@@ -20,7 +20,7 @@ export const updateEmployee = async (
   });
 
   if (!parse.success) {
-    return { errors: parse.error as ZodError<Pick<InsertEmployees, "name">> };
+    return { errors: parse.error.errors as ZodIssue[] };
   }
 
   try {
