@@ -1,14 +1,9 @@
 import type { Context, ErrorHandler } from "hono";
 import { HTTPException } from "hono/http-exception";
 
-import {
-  type ErrorCode,
-  ErrorCodeEnum,
-  SchemaError,
-  statusToCode,
-} from "./index";
+import { SchemaError, statusToCode } from "./index";
 
-import { ZodError, z } from "zod";
+import { ZodError } from "zod";
 import { BlankEnv } from "hono/types";
 
 export const handleError: ErrorHandler<BlankEnv> = (err, c) => {
