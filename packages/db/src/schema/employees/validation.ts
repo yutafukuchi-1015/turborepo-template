@@ -4,6 +4,7 @@ import { z } from "zod";
 
 const extendSchema = z.object({
   name: z.string().min(1).max(255),
+  department: z.preprocess((v) => Number(v), z.number()),
 });
 
 export const insertEmployeesSchema =
