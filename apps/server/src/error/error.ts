@@ -1,26 +1,15 @@
-import { ErrorHandler } from "hono";
+import type { Context, ErrorHandler } from "hono";
+import { HTTPException } from "hono/http-exception";
+
+import {
+  type ErrorCode,
+  ErrorCodeEnum,
+  SchemaError,
+  statusToCode,
+} from "./index";
+
+import { ZodError, z } from "zod";
 import { BlankEnv } from "hono/types";
-
-class NotFoundError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "NotFoundError";
-  }
-}
-
-class BadRequestError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "BadRequestError";
-  }
-}
-
-class UnauthorizedError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "UnauthorizedError";
-  }
-}
 
 export const handleError: ErrorHandler<BlankEnv> = (err, c) => {
   console.error("[Error]", {
@@ -30,18 +19,55 @@ export const handleError: ErrorHandler<BlankEnv> = (err, c) => {
     method: c.req.method,
   });
 
-  if (err instanceof NotFoundError) {
-    return c.json({ message: err.message }, 404);
+  if (err instanceof ZodError) {
+    const error = SchemaError.fromZod(err, c);
+    return c.json(
+      {
+        code: "BAD_REQUEST",
+        message: error.message,
+      },
+      { status: 400 }
+    );
+  }
+  if (err instanceof HTTPException) {
+    return c.json(
+      {
+        code: statusToCode(err.status),
+        message: err.message,
+      },
+      { status: err.status }
+    );
   }
 
-  if (err instanceof BadRequestError) {
-    return c.json({ message: err.message }, 400);
-  }
-
-  if (err instanceof UnauthorizedError) {
-    return c.json({ message: err.message }, 401);
-  }
-
-  // その他の予期せぬエラー
-  return c.json({ message: "予期せぬエラーが発生しました" }, 500);
+  return c.json(
+    {
+      code: "INTERNAL_SERVER_ERROR",
+      message: err.message ?? "Something went wrong",
+    },
+    { status: 500 }
+  );
 };
+
+export function handleZodError(
+  result:
+    | {
+        success: true;
+        data: unknown;
+      }
+    | {
+        success: false;
+        error: ZodError;
+      },
+  c: Context
+) {
+  if (!result.success) {
+    const error = SchemaError.fromZod(result.error, c);
+    return c.json(
+      {
+        code: "BAD_REQUEST",
+        message: error.message,
+      },
+      { status: 400 }
+    );
+  }
+}
