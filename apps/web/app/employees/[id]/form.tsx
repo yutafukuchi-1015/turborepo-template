@@ -2,13 +2,9 @@
 
 import React, { useActionState } from "react";
 import { Button, Input, Label } from "@repo/ui";
-import {
-  Employees,
-  InsertEmployees,
-  insertEmployeesSchema,
-} from "@repo/db/src/schema/employees/validation";
+import { Employees } from "@repo/db/src/schema/employees/validation";
 import { updateEmployee, deleteEmployee } from "./actions";
-import { z, ZodError, ZodIssue } from "zod";
+import { ZodIssue } from "zod";
 
 export const Form = ({ employee }: { employee: Employees }) => {
   const [state, formAction] = useActionState<

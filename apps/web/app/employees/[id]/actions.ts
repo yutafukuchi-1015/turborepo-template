@@ -1,12 +1,9 @@
 "use server";
 import { client } from "@/server/src";
-import { z, ZodError, ZodIssue } from "zod";
+import { ZodIssue } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import {
-  InsertEmployees,
-  insertEmployeesSchema,
-} from "@repo/db/src/schema/employees/validation";
+import { insertEmployeesSchema } from "@repo/db/src/schema/employees/validation";
 
 export const updateEmployee = async (
   id: number,
