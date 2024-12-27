@@ -1,6 +1,6 @@
 import React from "react";
 import { client } from "@/server/src/index";
-import { EmployeesTable } from "./_components/employees-table";
+import { EmployeesTable } from "../_components/employees-table";
 import { Button } from "@repo/ui";
 import Link from "next/link";
 
