@@ -1,6 +1,3 @@
-import { SidebarLayout } from "@/web/components/sidebar-layout";
-import { SidebarProvider } from "@repo/ui/src/components/sidebar";
-
 const EmployeeLayout = ({
   children,
 }: Readonly<{

@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { eq } from "drizzle-orm";
-import { z, ZodObject, ZodTypeAny } from "zod";
+import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
 import { db } from "@repo/db";
 import { employees as employeesTable } from "@repo/db/src/schema";
