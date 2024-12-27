@@ -5,7 +5,10 @@ import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
 import { db } from "@repo/db";
 import { employees as employeesTable } from "@repo/db/src/schema";
-import { selectEmployeesSchema } from "@repo/db/src/schema/employees/validation";
+import {
+  insertEmployeesSchema,
+  selectEmployeesSchema,
+} from "@repo/db/src/schema/employees/validation";
 
 export const employees = new Hono()
   .get("/", async (c) => {
@@ -33,51 +36,32 @@ export const employees = new Hono()
 
     return c.json({ ...data }, 200);
   })
-  .post(
-    "/",
-    zValidator(
-      "json",
-      // FIXME, insertEmployeesSchema,
-      z.object({
-        name: z.string(),
-      })
-    ),
-    async (c) => {
-      const body = await c.req.valid("json");
-      const _newEmployees = await db
-        .insert(employeesTable)
-        .values(body)
-        .returning();
+  .post("/", zValidator("json", insertEmployeesSchema as any), async (c) => {
+    const body = await c.req.valid("json");
+    const _newEmployees = (
+      await db.insert(employeesTable).values(body).returning()
+    )[0];
 
-      // if it occured error, catch error by app.onError as ZodError
-      const data = selectEmployeesSchema.parse(_newEmployees);
+    // if it occured error, catch error by app.onError as ZodError
+    const data = selectEmployeesSchema.parse(_newEmployees);
 
-      return c.json(data, 200);
-    }
-  )
-  .put(
-    "/:id",
-    zValidator(
-      "json",
-      // insertEmployeesSchema),
-      z.object({
-        name: z.string(),
-      })
-    ),
-    async (c) => {
-      const { id } = c.req.param();
-      const body = await c.req.valid("json");
-      const _newEmployees = await db
+    return c.json(data, 200);
+  })
+  .put("/:id", zValidator("json", insertEmployeesSchema as any), async (c) => {
+    const { id } = c.req.param();
+    const body = await c.req.valid("json");
+    const _newEmployees = (
+      await db
         .update(employeesTable)
         .set(body)
         .where(eq(employeesTable.id, Number(id)))
-        .returning();
+        .returning()
+    )[0];
 
-      // if it occured error, catch error by app.onError as ZodError
-      const data = selectEmployeesSchema.parse(_newEmployees);
-      return c.json(data, 200);
-    }
-  )
+    // if it occured error, catch error by app.onError as ZodError
+    const data = selectEmployeesSchema.parse(_newEmployees);
+    return c.json(data, 200);
+  })
   .delete("/:id", async (c) => {
     const { id } = c.req.param();
     await db.delete(employeesTable).where(eq(employeesTable.id, Number(id)));
