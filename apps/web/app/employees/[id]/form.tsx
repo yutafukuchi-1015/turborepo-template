@@ -29,7 +29,12 @@ export const Form = ({ employee }: { employee: Employees }) => {
           </div>
           <div className="space-y-2">
             <Label htmlFor="department">Department</Label>
-            <Input id="department" name="department" type="number" />
+            <Input
+              id="department"
+              name="department"
+              type="number"
+              defaultValue={employee.department}
+            />
           </div>
         </div>
         <Button type="submit">Submit</Button>
