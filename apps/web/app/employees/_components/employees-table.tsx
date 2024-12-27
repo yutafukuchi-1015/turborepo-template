@@ -33,7 +33,7 @@ export const EmployeesTable = ({
           <TableRow key={employee.id}>
             <TableCell className="font-medium">{employee.id}</TableCell>
             <TableCell>{employee.name}</TableCell>
-            <TableCell>test</TableCell>
+            <TableCell>{employee.department}</TableCell>
             <TableCell>
               <Link href={`/employees/${employee.id}`}>
                 <Button>view</Button>

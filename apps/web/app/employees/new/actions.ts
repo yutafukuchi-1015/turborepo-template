@@ -10,16 +10,17 @@ export const createEmployee = async (
   },
   formData: FormData
 ): Promise<{ errors: ZodIssue[] | undefined }> => {
-  const schema = insertEmployeesSchema.pick({ name: true });
+  const schema = insertEmployeesSchema;
   const parse = schema.safeParse({
     name: formData.get("name"),
+    department: formData.get("department"),
   });
   if (!parse.success) {
     return { errors: parse.error.errors as ZodIssue[] };
   }
   const data = parse.data;
   try {
-    await client.employees.$post({ json: { name: data.name } });
+    await client.employees.$post({ json: { ...data } });
     revalidatePath("/employees");
     return { errors: undefined };
   } catch (error) {

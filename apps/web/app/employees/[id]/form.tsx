@@ -29,7 +29,7 @@ export const Form = ({ employee }: { employee: Employees }) => {
           </div>
           <div className="space-y-2">
             <Label htmlFor="department">Department</Label>
-            <Input id="department" name="department" />
+            <Input id="department" name="department" type="number" />
           </div>
         </div>
         <Button type="submit">Submit</Button>

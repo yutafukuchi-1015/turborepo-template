@@ -10,10 +10,11 @@ export const updateEmployee = async (
   prevState: { errors: ZodIssue[] | undefined },
   formData: FormData
 ): Promise<{ errors: ZodIssue[] | undefined }> => {
-  const schema = insertEmployeesSchema.pick({ name: true });
+  const schema = insertEmployeesSchema;
 
   const parse = schema.safeParse({
     name: formData.get("name"),
+    department: formData.get("department"),
   });
 
   if (!parse.success) {
