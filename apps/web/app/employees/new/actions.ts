@@ -2,6 +2,7 @@
 import { client } from "@/server/src";
 import { insertEmployeesSchema } from "@repo/db/src/schema/employees/validation";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { ZodIssue } from "zod";
 
 export const createEmployee = async (
@@ -22,8 +23,9 @@ export const createEmployee = async (
   try {
     await client.employees.$post({ json: { ...data } });
     revalidatePath("/employees");
-    return { errors: undefined };
   } catch (error) {
     throw new Error("Failed to create employee");
   }
+
+  redirect("/employees")
 };

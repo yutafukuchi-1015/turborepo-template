@@ -27,18 +27,19 @@ export const updateEmployee = async (
       param: { id: String(id) },
     });
     revalidatePath("/employees");
-    return { errors: undefined };
   } catch (error) {
     throw new Error("Failed to update employee");
   }
+
+  redirect("/employees")
 };
 
 export const deleteEmployee = async (id: number) => {
   try {
     await client.employees[":id"].$delete({ param: { id: String(id) } });
     revalidatePath("/employees");
-    redirect("/employees");
   } catch (error) {
     throw new Error("Failed to delete employee");
   }
+  redirect("/employees");
 };
