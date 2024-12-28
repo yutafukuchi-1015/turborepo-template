@@ -1,13 +1,14 @@
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { eq } from "drizzle-orm";
-import { z } from "zod";
+import { ZodType, z } from "zod";
 import { zValidator } from "@hono/zod-validator";
 import { db } from "@repo/db";
 import { employees as employeesTable } from "@repo/db/src/schema";
 import {
   insertEmployeesSchema,
   selectEmployeesSchema,
+  Employees
 } from "@repo/db/src/schema/employees/validation";
 
 export const employees = new Hono()
@@ -15,7 +16,7 @@ export const employees = new Hono()
     const _employees = await db.select().from(employeesTable);
 
     // if it occured error, catch error by app.onError as ZodError
-    const data = z.array(selectEmployeesSchema as any).parse(_employees);
+    const data = z.array<ZodType<Employees>>(selectEmployeesSchema as any).parse(_employees); // FIXME any
 
     return c.json({ results: data }, 200);
   })
