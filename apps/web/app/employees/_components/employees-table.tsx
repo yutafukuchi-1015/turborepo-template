@@ -30,7 +30,6 @@ export const EmployeesTable = ({
           <TableHead>Name</TableHead>
           <TableHead>Department</TableHead>
           <TableHead>Detail</TableHead>
-          <TableHead>Open Detail in new tab</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -41,12 +40,7 @@ export const EmployeesTable = ({
             <TableCell>{getLabelById(employee.department)}</TableCell>
             <TableCell>
               <Link href={`/employees/${employee.id}`}>
-                <Button>view</Button>
-              </Link>
-            </TableCell>
-            <TableCell>
-              <Link target="_blank" href={`/employees/${employee.id}`}>
-                <Button>view</Button>
+                <Button>Detail</Button>
               </Link>
             </TableCell>
           </TableRow>
