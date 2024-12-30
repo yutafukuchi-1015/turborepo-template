@@ -27,5 +27,5 @@ export const createEmployee = async (
     throw new Error("Failed to create employee");
   }
 
-  redirect("/employees")
+  redirect("/employees");
 };
