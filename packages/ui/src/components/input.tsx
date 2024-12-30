@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils";
 
 const Input = React.forwardRef<
   HTMLInputElement,
-  React.ComponentProps<"input"> & { error?: boolean; errorMessage?: string }
->(({ className, type, error, errorMessage, ...props }, ref) => {
+  React.ComponentProps<"input"> & { error?: boolean }
+>(({ className, type, error, ...props }, ref) => {
   return (
     <>
       <input
@@ -18,9 +18,6 @@ const Input = React.forwardRef<
         ref={ref}
         {...props}
       />
-      {error && errorMessage && (
-        <p className="text-red-500 text-sm font-medium">{errorMessage}</p>
-      )}
     </>
   );
 });
