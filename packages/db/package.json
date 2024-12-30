@@ -3,12 +3,15 @@
   "version": "0.0.1",
   "main": "src/index.ts",
   "scripts": {
-    "generate": "drizzle-kit generate",
-    "push": "drizzle-kit push",
-    "migrate": "drizzle-kit migrate",
-    "studio": "drizzle-kit studio",
     "env": "bun env.ts",
-    "seed": "bun src/seed.mts"
+    "seed": "bun src/seed.mts",
+    "generate": "drizzle-kit generate",
+    "migrate": "drizzle-kit migrate",
+    "push": "drizzle-kit push",
+    "pull": "drizzle-kit pull",
+    "check": "drizzle-kit check",
+    "up": "drizzle-kit up",
+    "studio": "drizzle-kit studio"
   },
   "dependencies": {
     "dotenv": "^16.4.7",
