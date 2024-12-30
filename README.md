@@ -7,4 +7,5 @@ docker-compose up -d
 bun push
 
 ### /root
-pnpm i && pnpm run dev
+pnpm i
+pnpm run dev
