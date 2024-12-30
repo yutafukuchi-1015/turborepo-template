@@ -5,7 +5,7 @@
   "scripts": {
     "generate": "drizzle-kit generate",
     "push": "drizzle-kit push",
-    "migrate": "bun src/migrate.mts",
+    "migrate": "drizzle-kit migrate",
     "studio": "drizzle-kit studio",
     "env": "bun env.ts",
     "seed": "bun src/seed.mts"
