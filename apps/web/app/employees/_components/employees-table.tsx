@@ -10,13 +10,18 @@ import {
   TableRow,
 } from "@repo/ui";
 import Link from "next/link";
-import { Employees } from "@repo/db/src/schema/employees/validation";
+import { Employees, Departments } from "@repo/db/src/schema/index";
 
 export const EmployeesTable = ({
   employees,
+  departments,
 }: {
   employees: { results: Employees[] };
+  departments: Departments[];
 }) => {
+  const getLabelById = (id: number) =>
+    departments.find((department) => department.id === id)?.label;
+
   return (
     <Table>
       <TableHeader>
@@ -33,7 +38,7 @@ export const EmployeesTable = ({
           <TableRow key={employee.id}>
             <TableCell className="font-medium">{employee.id}</TableCell>
             <TableCell>{employee.name}</TableCell>
-            <TableCell>{employee.department}</TableCell>
+            <TableCell>{getLabelById(employee.department)}</TableCell>
             <TableCell>
               <Link href={`/employees/${employee.id}`}>
                 <Button>view</Button>

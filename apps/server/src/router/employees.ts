@@ -20,6 +20,7 @@ export const employees = new Hono()
       .array<ZodType<Employees>>(selectEmployeesSchema as any)
       .parse(_employees); // FIXME any
 
+    //FIXME impl Pagination
     return c.json({ results: data }, 200);
   })
   .get("/:id", async (c) => {
