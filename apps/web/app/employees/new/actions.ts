@@ -5,19 +5,22 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { ZodIssue } from "zod";
 
+export type ActionState = {
+  errors: ZodIssue[] | undefined;
+  formData: FormData | undefined;
+};
+
 export const createEmployee = async (
-  prevState: {
-    errors: ZodIssue[] | undefined;
-  },
+  prevState: ActionState,
   formData: FormData
-): Promise<{ errors: ZodIssue[] | undefined }> => {
+): Promise<ActionState> => {
   const schema = insertEmployeesSchema;
   const parse = schema.safeParse({
     name: formData.get("name"),
     department: formData.get("department"),
   });
   if (!parse.success) {
-    return { errors: parse.error.errors as ZodIssue[] };
+    return { errors: parse.error.errors as ZodIssue[], formData };
   }
   const data = parse.data;
   try {

@@ -5,13 +5,15 @@ import { Button, Input, Label } from "@repo/ui";
 import { Employees } from "@repo/db/src/schema/employees/validation";
 import { updateEmployee, deleteEmployee } from "./actions";
 import { ZodIssue } from "zod";
+import { hasError, errorMessage, createDefaultValue } from "@/web/lib/form";
 
 export const Form = ({ employee }: { employee: Employees }) => {
   const [state, formAction] = useActionState<
-    { errors: ZodIssue[] | undefined },
+    { errors: ZodIssue[] | undefined; formData: FormData | undefined },
     FormData
   >((state, formData) => updateEmployee(employee.id, state, formData), {
     errors: undefined,
+    formData: undefined,
   });
 
   return (
@@ -25,7 +27,27 @@ export const Form = ({ employee }: { employee: Employees }) => {
         <div className="grid grid-cols-1 gap-4">
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
-            <Input id="name" name="name" defaultValue={employee.name} />
+            <Input
+              id="name"
+              name="name"
+              defaultValue={createDefaultValue({
+                formData: state.formData,
+                key: "name",
+                defaultValue: employee.name,
+              })}
+              error={hasError({
+                errors: state.errors,
+                key: "name",
+              })}
+            />
+            {state.errors !== undefined && (
+              <p className="text-red-500 text-sm font-medium">
+                {errorMessage({
+                  errors: state.errors,
+                  key: "name",
+                })}
+              </p>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="department">Department</Label>

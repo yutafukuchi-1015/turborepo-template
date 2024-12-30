@@ -5,11 +5,16 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { insertEmployeesSchema } from "@repo/db/src/schema/employees/validation";
 
+export type ActionState = {
+  errors: ZodIssue[] | undefined;
+  formData: FormData | undefined;
+};
+
 export const updateEmployee = async (
   id: number,
-  prevState: { errors: ZodIssue[] | undefined },
+  prevState: ActionState,
   formData: FormData
-): Promise<{ errors: ZodIssue[] | undefined }> => {
+): Promise<ActionState> => {
   const schema = insertEmployeesSchema;
 
   const parse = schema.safeParse({
@@ -18,7 +23,7 @@ export const updateEmployee = async (
   });
 
   if (!parse.success) {
-    return { errors: parse.error.errors as ZodIssue[] };
+    return { errors: parse.error.errors as ZodIssue[], formData };
   }
 
   try {
@@ -31,7 +36,7 @@ export const updateEmployee = async (
     throw new Error("Failed to update employee");
   }
 
-  redirect("/employees")
+  redirect("/employees");
 };
 
 export const deleteEmployee = async (id: number) => {
