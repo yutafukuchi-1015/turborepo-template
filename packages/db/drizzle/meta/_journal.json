@@ -15,6 +15,13 @@
       "when": 1735523871996,
       "tag": "0001_special_avengers",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1735547044169,
+      "tag": "0002_secret_polaris",
+      "breakpoints": true
     }
   ]
 }
