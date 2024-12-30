@@ -1,5 +1,10 @@
-1. cd ./package/db
-2. docker-compose up -d
-3. bun push　(migrate)
-4. bun ./src/index.ts (seed.現状はseed injection codeは消している)
-5. pnpm run dev (root配下で)
+## HOW TO START
+### /package/db
+cd ./package/db
+cp .env.example .env
+.envのDB_URLの中身を記載
+docker-compose up -d
+bun push
+
+### /root
+pnpm i && pnpm run dev
