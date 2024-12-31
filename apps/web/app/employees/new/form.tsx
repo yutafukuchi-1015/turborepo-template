@@ -33,7 +33,12 @@ export const Form = () => {
           </div>
           <div>
             <Label htmlFor="department">Department</Label>
-            <Input id="department" name="department" type="number" />
+            <InputWrapper
+              name={"department"}
+              formData={state.formData}
+              errors={state.errors}
+              type="number"
+            />
           </div>
         </div>
         <Button type="submit">Submit</Button>

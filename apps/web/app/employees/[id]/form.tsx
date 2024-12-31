@@ -38,11 +38,12 @@ export const Form = ({ employee }: { employee: Employees }) => {
           <div className="space-y-2">
             {/* FIXME 0でもFE validationは通っているが、どこかのvalidationにかかり登録されてない */}
             <Label htmlFor="department">Department</Label>
-            <Input
-              id="department"
-              name="department"
-              type="number"
+            <InputWrapper
+              name={"department"}
+              formData={state.formData}
+              errors={state.errors}
               defaultValue={employee.department}
+              type="number"
             />
           </div>
         </div>
