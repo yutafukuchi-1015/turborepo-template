@@ -7,5 +7,14 @@ export default async function EmployeesPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  return <Form />;
+  const departmentsRes = client.departments.$get(undefined, {
+    fetch: () =>
+      fetch(client.departments.$url(), {
+        method: "GET",
+        cache: "no-store",
+      }),
+  });
+  const departments = await (await departmentsRes).json();
+
+  return <Form departments={departments} />;
 }

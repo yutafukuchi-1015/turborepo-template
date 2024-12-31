@@ -7,8 +7,16 @@ import { updateEmployee, deleteEmployee } from "./actions";
 import { ZodIssue } from "zod";
 import { hasError, errorMessage, createDefaultValue } from "@/web/lib/form";
 import { InputWrapper } from "@/web/components/input-wrapper";
+import { SelectWrapper } from "@/web/components/select-wrapper";
+import { Departments } from "@repo/db/src/schema";
 
-export const Form = ({ employee }: { employee: Employees }) => {
+export const Form = ({
+  employee,
+  departments,
+}: {
+  employee: Employees;
+  departments: Departments[];
+}) => {
   const [state, formAction] = useActionState<
     { errors: ZodIssue[] | undefined; formData: FormData | undefined },
     FormData
@@ -38,12 +46,17 @@ export const Form = ({ employee }: { employee: Employees }) => {
           <div className="space-y-2">
             {/* FIXME 0でもFE validationは通っているが、どこかのvalidationにかかり登録されてない */}
             <Label htmlFor="department">Department</Label>
-            <InputWrapper
+            <SelectWrapper
               name={"department"}
               formData={state.formData}
               errors={state.errors}
-              defaultValue={employee.department}
-              type="number"
+              defaultValue={String(employee.department)}
+              options={departments.map((department, index) => {
+                return {
+                  label: department.label,
+                  value: String(department.id),
+                };
+              })}
             />
           </div>
         </div>

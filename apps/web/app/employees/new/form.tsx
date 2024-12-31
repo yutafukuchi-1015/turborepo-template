@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useActionState } from "react";
-import { Button, Input, Label } from "@repo/ui";
+import { Button, Label } from "@repo/ui";
 import { createEmployee } from "./actions";
 import { ZodIssue } from "zod";
-import { hasError, errorMessage, createDefaultValue } from "@/web/lib/form";
 import { InputWrapper } from "@/web/components/input-wrapper";
+import { SelectWrapper } from "@/web/components/select-wrapper";
+import { Departments } from "@repo/db/src/schema";
 
-export const Form = () => {
+export const Form = ({ departments }: { departments: Departments[] }) => {
   const [state, formAction] = useActionState<
     {
       errors: ZodIssue[] | undefined;
@@ -33,11 +34,16 @@ export const Form = () => {
           </div>
           <div>
             <Label htmlFor="department">Department</Label>
-            <InputWrapper
+            <SelectWrapper
               name={"department"}
               formData={state.formData}
               errors={state.errors}
-              type="number"
+              options={departments.map((department, index) => {
+                return {
+                  label: department.label,
+                  value: String(department.id),
+                };
+              })}
             />
           </div>
         </div>

@@ -13,5 +13,14 @@ export default async function EmployeesPage({
   });
   const employee = await res.json();
 
-  return <Form employee={employee} />;
+  const departmentsRes = client.departments.$get(undefined, {
+    fetch: () =>
+      fetch(client.departments.$url(), {
+        method: "GET",
+        cache: "no-store",
+      }),
+  });
+  const departments = await (await departmentsRes).json();
+
+  return <Form employee={employee} departments={departments} />;
 }
