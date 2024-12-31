@@ -14,3 +14,10 @@ bun push
 pnpm i
 
 pnpm run dev
+
+## script
+### /apps/web
+After `bun generate-api`, script generate api call fn.
+
+### /package/db
+After `bun pull`, script generate schema table from postgresql.
