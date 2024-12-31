@@ -6,21 +6,18 @@ export const useEmployees = async () =>
       fetch: () =>
         fetch(client.employees.$url(), {
           method: "GET",
-          cache: "no-store", //SSR
+          cache: "no-store", // SSR
         }),
     })
   ).json();
 
 export const useSingleEmployee = async ({ id }: { id: string }) =>
   await (
-    await client.employees[":id"].$get(
-      { param: { id } },
-      {
-        fetch: () =>
-          fetch(client.employees[":id"].$url({ param: { id } }), {
-            method: "GET",
-            cache: "no-store", //SSR
-          }),
-      }
-    )
+    await client.employees[":id"].$get({ param: { id } },{
+      fetch: () =>
+        fetch(client.employees[":id"].$url({ param: { id } }), {
+          method: "GET",
+          cache: "no-store", // SSR
+        }),
+    })
   ).json();

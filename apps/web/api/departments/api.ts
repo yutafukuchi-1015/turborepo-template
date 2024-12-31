@@ -6,7 +6,7 @@ export const useDepartments = async () =>
       fetch: () =>
         fetch(client.departments.$url(), {
           method: "GET",
-          cache: "force-cache", //SSG
+          cache: "no-store", // SSR
         }),
     })
   ).json();
