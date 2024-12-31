@@ -5,6 +5,7 @@ import { Button, Input, Label } from "@repo/ui";
 import { createEmployee } from "./actions";
 import { ZodIssue } from "zod";
 import { hasError, errorMessage, createDefaultValue } from "@/web/lib/form";
+import { InputWrapper } from "@/web/components/input-wrapper";
 
 export const Form = () => {
   const [state, formAction] = useActionState<
@@ -24,27 +25,11 @@ export const Form = () => {
         <div className="grid grid-cols-1 gap-4">
           <div>
             <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
-              name="name"
-              defaultValue={createDefaultValue({
-                formData: state.formData,
-                key: "name",
-                defaultValue: undefined,
-              })}
-              error={hasError({
-                errors: state.errors,
-                key: "name",
-              })}
+            <InputWrapper
+              name={"name"}
+              formData={state.formData}
+              errors={state.errors}
             />
-            {state.errors !== undefined && (
-              <p className="text-red-500 text-sm font-medium">
-                {errorMessage({
-                  errors: state.errors,
-                  key: "name",
-                })}
-              </p>
-            )}
           </div>
           <div>
             <Label htmlFor="department">Department</Label>

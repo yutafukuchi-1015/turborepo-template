@@ -6,6 +6,7 @@ import { Employees } from "@repo/db/src/schema/employees/validation";
 import { updateEmployee, deleteEmployee } from "./actions";
 import { ZodIssue } from "zod";
 import { hasError, errorMessage, createDefaultValue } from "@/web/lib/form";
+import { InputWrapper } from "@/web/components/input-wrapper";
 
 export const Form = ({ employee }: { employee: Employees }) => {
   const [state, formAction] = useActionState<
@@ -27,29 +28,15 @@ export const Form = ({ employee }: { employee: Employees }) => {
         <div className="grid grid-cols-1 gap-4">
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
-              name="name"
-              defaultValue={createDefaultValue({
-                formData: state.formData,
-                key: "name",
-                defaultValue: employee.name,
-              })}
-              error={hasError({
-                errors: state.errors,
-                key: "name",
-              })}
+            <InputWrapper
+              name={"name"}
+              formData={state.formData}
+              errors={state.errors}
+              defaultValue={employee.name}
             />
-            {state.errors !== undefined && (
-              <p className="text-red-500 text-sm font-medium">
-                {errorMessage({
-                  errors: state.errors,
-                  key: "name",
-                })}
-              </p>
-            )}
           </div>
           <div className="space-y-2">
+            {/* FIXME 0でもFE validationは通っているが、どこかのvalidationにかかり登録されてない */}
             <Label htmlFor="department">Department</Label>
             <Input
               id="department"

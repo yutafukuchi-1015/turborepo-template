@@ -2,27 +2,27 @@ import { ZodIssue } from "zod";
 
 type ErrorHandlingArgs = {
   errors: ZodIssue[] | undefined;
-  key: string;
+  name: string;
 };
-export const targetError = ({ errors, key }: ErrorHandlingArgs) =>
-  errors?.find((error) => error.path.includes(key));
-export const hasError = ({ errors, key }: ErrorHandlingArgs) =>
+export const targetError = ({ errors, name }: ErrorHandlingArgs) =>
+  errors?.find((error) => error.path.includes(name));
+export const hasError = ({ errors, name }: ErrorHandlingArgs) =>
   targetError({
     errors,
-    key,
+    name,
   }) !== undefined;
-export const errorMessage = ({ errors, key }: ErrorHandlingArgs) =>
+export const errorMessage = ({ errors, name }: ErrorHandlingArgs) =>
   targetError({
     errors,
-    key,
+    name,
   })?.message;
 
 export const createDefaultValue = <T>({
   formData,
-  key,
+  name,
   defaultValue,
 }: {
   formData: FormData | undefined;
-  key: string;
+  name: string;
   defaultValue: T;
-}) => (formData ? (formData?.get(key) as T) : defaultValue);
+}) => (formData ? (formData?.get(name) as T) : defaultValue);
