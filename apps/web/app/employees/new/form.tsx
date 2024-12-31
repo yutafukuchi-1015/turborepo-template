@@ -24,7 +24,7 @@ export const Form = ({ departments }: { departments: Departments[] }) => {
       <h1 className="text-2xl">New Employee</h1>
       <form className="space-y-4" action={formAction}>
         <div className="grid grid-cols-1 gap-4">
-          <div>
+          <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
             <InputWrapper
               name={"name"}
@@ -32,7 +32,7 @@ export const Form = ({ departments }: { departments: Departments[] }) => {
               errors={state.errors}
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label htmlFor="department">Department</Label>
             <SelectWrapper
               name={"department"}
