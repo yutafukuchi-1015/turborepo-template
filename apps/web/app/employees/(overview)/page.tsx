@@ -3,25 +3,12 @@ import { client } from "@/server/src/index";
 import { EmployeesTable } from "../_components/employees-table";
 import { Button } from "@repo/ui";
 import Link from "next/link";
+import { useEmployees } from "@/web/api/employees/api";
+import { useDepartments } from "@/web/api/departments/api";
 
 export default async function EmployeesPage() {
-  const employeesRes = client.employees.$get(undefined, {
-    fetch: () =>
-      fetch(client.employees.$url(), {
-        method: "GET",
-        cache: "no-store",
-      }),
-  });
-  const employees = await (await employeesRes).json();
-
-  const departmentsRes = client.departments.$get(undefined, {
-    fetch: () =>
-      fetch(client.departments.$url(), {
-        method: "GET",
-        cache: "no-store",
-      }),
-  });
-  const departments = await (await departmentsRes).json();
+  const employees = await useEmployees();
+  const departments = await useDepartments();
 
   return (
     <div>
