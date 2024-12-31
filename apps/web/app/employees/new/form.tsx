@@ -38,7 +38,8 @@ export const Form = ({ departments }: { departments: Departments[] }) => {
               name={"department"}
               formData={state.formData}
               errors={state.errors}
-              options={departments.map((department, index) => {
+              //FIXME make options creator fn
+              options={departments.map((department) => {
                 return {
                   label: department.label,
                   value: String(department.id),

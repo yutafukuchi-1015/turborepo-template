@@ -8,6 +8,7 @@ export default async function EmployeesPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+
   const res = await client.employees[":id"].$get({
     param: { id: id },
   });

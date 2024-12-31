@@ -51,7 +51,8 @@ export const Form = ({
               formData={state.formData}
               errors={state.errors}
               defaultValue={String(employee.department)}
-              options={departments.map((department, index) => {
+              //FIXME make options creator fn
+              options={departments.map((department) => {
                 return {
                   label: department.label,
                   value: String(department.id),
