@@ -1,3 +1,5 @@
+// generate api call fn
+// bun ./generate-api.ts
 import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import { resolve, dirname } from "path";
 import path from "path";
