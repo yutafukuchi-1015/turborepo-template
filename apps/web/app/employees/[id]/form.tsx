@@ -44,7 +44,6 @@ export const Form = ({
             />
           </div>
           <div className="space-y-2">
-            {/* FIXME 0でもFE validationは通っているが、どこかのvalidationにかかり登録されてない */}
             <Label htmlFor="department">Department</Label>
             <SelectWrapper
               name={"department"}
