@@ -35,7 +35,7 @@ export abstract class BaseError<
     return `${this.name}(${this.code}): ${
       this.message
     } - caused by ${this.cause?.toString()} - with context ${JSON.stringify(
-      this.context
+      this.context,
     )}`;
   }
 

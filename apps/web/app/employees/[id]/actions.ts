@@ -13,7 +13,7 @@ export type ActionState = {
 export const updateEmployee = async (
   id: number,
   prevState: ActionState,
-  formData: FormData
+  formData: FormData,
 ): Promise<ActionState> => {
   const schema = insertEmployeesSchema;
 

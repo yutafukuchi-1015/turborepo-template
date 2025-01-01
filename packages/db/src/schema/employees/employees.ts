@@ -18,7 +18,7 @@ export const employees = pgTable(
     })
       .onUpdate("cascade")
       .onDelete("cascade"),
-  ]
+  ],
 );
 
 export const employeesRelations = relations(employees, ({ one }) => ({

@@ -27,16 +27,18 @@ export const createDefaultValue = <T>({
   defaultValue: T;
 }) => (formData ? (formData?.get(name) as T) : defaultValue);
 
-export const createOptions = ({ response }: {
+export const createOptions = ({
+  response,
+}: {
   response: {
-    id: number,
-    label: string,
-  }[]
+    id: number;
+    label: string;
+  }[];
 }) => {
-  return response.map(r => {
+  return response.map((r) => {
     return {
       label: r.label,
       value: String(r.id),
     };
-  })
-}
+  });
+};

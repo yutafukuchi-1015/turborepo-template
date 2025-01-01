@@ -12,7 +12,7 @@ export type ActionState = {
 
 export const createEmployee = async (
   prevState: ActionState,
-  formData: FormData
+  formData: FormData,
 ): Promise<ActionState> => {
   const schema = insertEmployeesSchema;
   const parse = schema.safeParse({

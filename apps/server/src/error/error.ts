@@ -21,7 +21,7 @@ export const handleError: ErrorHandler<BlankEnv> = (err, c) => {
         code: "BAD_REQUEST",
         message: error.message,
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
   if (err instanceof HTTPException) {
@@ -30,7 +30,7 @@ export const handleError: ErrorHandler<BlankEnv> = (err, c) => {
         code: statusToCode(err.status),
         message: err.message,
       },
-      { status: err.status }
+      { status: err.status },
     );
   }
 
@@ -39,7 +39,7 @@ export const handleError: ErrorHandler<BlankEnv> = (err, c) => {
       code: "INTERNAL_SERVER_ERROR",
       message: err.message ?? "Something went wrong",
     },
-    { status: 500 }
+    { status: 500 },
   );
 };
 
@@ -53,7 +53,7 @@ export function handleZodError(
         success: false;
         error: ZodError;
       },
-  c: Context
+  c: Context,
 ) {
   if (!result.success) {
     const error = SchemaError.fromZod(result.error, c);
@@ -62,7 +62,7 @@ export function handleZodError(
         code: "BAD_REQUEST",
         message: error.message,
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
 }
