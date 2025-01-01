@@ -17,20 +17,8 @@ const items = [
     url: "/employees",
   },
   {
-    title: "Home",
-    url: "/",
-  },
-  {
-    title: "Test1",
-    url: "#",
-  },
-  {
-    title: "Test2",
-    url: "#",
-  },
-  {
-    title: "Test3",
-    url: "#",
+    title: "GEMINI AI",
+    url: "/genai",
   },
 ];
 
