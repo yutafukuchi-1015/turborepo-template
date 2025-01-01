@@ -40,7 +40,7 @@ export const Form = ({ departments }: { departments: Departments[] }) => {
               name={"department"}
               formData={state.formData}
               errors={state.errors}
-              options={createOptions(departments)}
+              options={createOptions({ response: departments })}
             />
           </div>
         </div>
