@@ -7,6 +7,7 @@ import { ZodIssue } from "zod";
 import { InputWrapper } from "@/web/components/input-wrapper";
 import { SelectWrapper } from "@/web/components/select-wrapper";
 import { Departments } from "@repo/db/src/schema";
+import { createOptions } from "@/web/lib/form";
 
 export const Form = ({ departments }: { departments: Departments[] }) => {
   const [state, formAction] = useActionState<
@@ -19,6 +20,7 @@ export const Form = ({ departments }: { departments: Departments[] }) => {
     errors: undefined,
     formData: undefined,
   });
+
   return (
     <div className="space-y-4">
       <h1 className="text-2xl">New Employee</h1>
@@ -38,13 +40,7 @@ export const Form = ({ departments }: { departments: Departments[] }) => {
               name={"department"}
               formData={state.formData}
               errors={state.errors}
-              //FIXME make options creator fn
-              options={departments.map((department) => {
-                return {
-                  label: department.label,
-                  value: String(department.id),
-                };
-              })}
+              options={createOptions(departments)}
             />
           </div>
         </div>
