@@ -55,7 +55,7 @@ export function parseZodErrorIssues(issues: ZodIssue[]): string {
         ? i.unionErrors.map((ue) => parseZodErrorIssues(ue.issues)).join("; ")
         : i.code === "unrecognized_keys"
           ? i.message
-          : `${i.path.length ? `${i.code} in '${i.path}': ` : ""}${i.message}`,
+          : `${i.path.length ? `${i.code} in '${i.path}': ` : ""}${i.message}`
     )
     .join("; ");
 }
@@ -63,4 +63,5 @@ export function parseZodErrorIssues(issues: ZodIssue[]): string {
 export function redactError<TError extends Error | unknown>(err: TError) {
   if (!(err instanceof Error)) return err;
   console.error(`Type of Error: ${err.constructor}`);
+  return;
 }
