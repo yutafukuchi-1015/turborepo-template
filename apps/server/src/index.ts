@@ -7,7 +7,7 @@ import { handleError } from "./error/error";
 const port = Number(process.env.PORT) || 8080;
 const apiUrl = process.env.API_URL || "http://localhost:8080/";
 
-const app = new Hono()
+export const app = new Hono()
   .onError(handleError)
   .route("/employees", employees)
   .route("/departments", departments);
