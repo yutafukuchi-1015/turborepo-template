@@ -11,6 +11,7 @@ import {
 } from "@repo/ui";
 import Link from "next/link";
 import { Employees, Departments } from "@repo/db/src/schema/index";
+import { getLabelById } from "@/web/lib/form";
 
 export const EmployeesTable = ({
   employees,
@@ -19,9 +20,6 @@ export const EmployeesTable = ({
   employees: { results: Employees[] };
   departments: Departments[];
 }) => {
-  const getLabelById = (id: number) =>
-    departments.find((department) => department.id === id)?.label;
-
   return (
     <Table>
       <TableHeader>
@@ -37,7 +35,9 @@ export const EmployeesTable = ({
           <TableRow key={employee.id}>
             <TableCell className="font-medium">{employee.id}</TableCell>
             <TableCell>{employee.name}</TableCell>
-            <TableCell>{getLabelById(employee.department)}</TableCell>
+            <TableCell>
+              {getLabelById({ id: employee.department, kinds: departments })}
+            </TableCell>
             <TableCell>
               <Link href={`/employees/${employee.id}`}>
                 <Button>Detail</Button>

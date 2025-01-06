@@ -42,3 +42,11 @@ export const createOptions = ({
     };
   });
 };
+
+export const getLabelById = ({
+  id,
+  kinds,
+}: {
+  id: number;
+  kinds: { id: number; label: string }[];
+}) => kinds.find((kind) => kind.id === id)?.label;
