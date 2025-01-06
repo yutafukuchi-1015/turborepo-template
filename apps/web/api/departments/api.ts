@@ -10,3 +10,7 @@ export const useDepartments = async () =>
         }),
     })
   ).json();
+
+// FIXME rm below code
+// when use storybook, comment-in instead of abobe code
+// export const useDepartments = async () => {};

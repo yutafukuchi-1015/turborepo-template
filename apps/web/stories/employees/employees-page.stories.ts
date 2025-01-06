@@ -3,6 +3,7 @@ import { fn } from "@storybook/test";
 
 import EmployeesPage from "@/web/app/employees/(overview)/page";
 import { useEmployees } from "#api/employees/api.mock";
+import { useDepartments } from "#api/departments/api.mock";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -27,12 +28,12 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {},
   beforeEach: async () => {
-    useEmployees.mockReturnValue(
+    useEmployees.mockResolvedValue(
       new Promise((resolve, _) => {
         resolve({
           results: [
             {
-              name: "string",
+              name: "mock1",
               department: 1,
               id: 1,
               createdAt: null,
@@ -42,6 +43,12 @@ export const Primary: Story = {
             },
           ],
         });
+      }) as any
+    );
+
+    useDepartments.mockResolvedValue(
+      new Promise((resolve, _) => {
+        resolve([{ id: 1, label: "departments1" }]);
       }) as any
     );
   },

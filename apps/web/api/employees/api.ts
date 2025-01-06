@@ -25,6 +25,7 @@ export const useSingleEmployee = async ({ id }: { id: string }) =>
     )
   ).json();
 
+// FIXME rm below code
 // when use storybook, comment-in instead of abobe code
 // export const useEmployees = () => {};
 // export const useSingleEmployee = () => {};

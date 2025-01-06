@@ -3,7 +3,7 @@ import { EmployeesTable } from "../_components/employees-table";
 import { Button } from "@repo/ui";
 import Link from "next/link";
 import { useEmployees } from "#api/employees/api";
-import { useDepartments } from "@/web/api/departments/api";
+import { useDepartments } from "#api/departments/api";
 
 export default async function EmployeesPage() {
   const employees = await useEmployees();
