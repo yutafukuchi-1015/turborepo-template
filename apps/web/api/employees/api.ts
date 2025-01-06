@@ -21,6 +21,10 @@ export const useSingleEmployee = async ({ id }: { id: string }) =>
             method: "GET",
             cache: "no-store", // SSR
           }),
-      },
+      }
     )
   ).json();
+
+// when use storybook, comment-in instead of abobe code
+// export const useEmployees = () => {};
+// export const useSingleEmployee = () => {};
