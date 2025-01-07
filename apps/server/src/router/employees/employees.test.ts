@@ -40,7 +40,6 @@ const rollbackTransaction = async (
   );
 };
 
-// GET /employees test
 test("GET /employees", async () => {
   await db.transaction(async (tx) => {
     const prev = await makeInitDb(tx);
@@ -54,7 +53,6 @@ test("GET /employees", async () => {
   });
 });
 
-// POST /employees test
 test("POST /employees", async () => {
   await db.transaction(async (tx) => {
     const prev = await makeInitDb(tx);
@@ -72,6 +70,62 @@ test("POST /employees", async () => {
     expect(res.status).toBe(200);
     expect(json.name).toBe(mockData.json.name);
     expect(json.department).toBe(mockData.json.department);
+
+    rollbackTransaction(tx, prev);
+  });
+});
+
+test("PUT /employees", async () => {
+  await db.transaction(async (tx) => {
+    const prev = await makeInitDb(tx);
+
+    const prevData = {
+      json: {
+        name: "employees-post-test-prev",
+        department: 1,
+      },
+    };
+    const expectedData = {
+      json: {
+        name: "employees-post-test-expected",
+        department: 1,
+      },
+    };
+
+    const postedMockData = await testClient(app).employees.$post(prevData);
+    const deserializedPostedMockData = await postedMockData.json();
+    console.log("deserializedPostedMockData", deserializedPostedMockData);
+    const res = await testClient(app).employees[":id"].$put({
+      json: expectedData.json,
+      param: { id: String(deserializedPostedMockData.id) },
+    });
+    const json = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(json.name).toBe(expectedData.json.name);
+    expect(json.department).toBe(expectedData.json.department);
+
+    rollbackTransaction(tx, prev);
+  });
+});
+
+test("DELETE /employees", async () => {
+  await db.transaction(async (tx) => {
+    const prev = await makeInitDb(tx);
+    const mockData = {
+      json: {
+        name: "employees-post-test",
+        department: 1,
+      },
+    };
+    const postedMockData = await testClient(app).employees.$post(mockData);
+    const deserializedPostedMockData = await postedMockData.json();
+    const res = await testClient(app).employees[":id"].$delete({
+      param: { id: String(deserializedPostedMockData.id) },
+    });
+    const json = await res.json();
+
+    expect(res.status).toBe(200);
 
     rollbackTransaction(tx, prev);
   });
