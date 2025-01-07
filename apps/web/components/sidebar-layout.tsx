@@ -16,10 +16,6 @@ const items = [
     title: "Employees",
     url: "/employees",
   },
-  {
-    title: "GEMINI AI",
-    url: "/genai",
-  },
 ];
 
 export function SidebarLayout() {
