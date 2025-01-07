@@ -49,7 +49,6 @@ export const employees = new Hono()
     }),
     async (c) => {
       const body = await c.req.valid("json");
-      console.log("body", body);
       const _newEmployees = (
         await db.insert(employeesTable).values(body).returning()
       )[0];
@@ -58,7 +57,7 @@ export const employees = new Hono()
       const data = selectEmployeesSchema.parse(_newEmployees);
 
       return c.json(data, 200);
-    },
+    }
   )
   .put(
     "/:id",
@@ -81,7 +80,7 @@ export const employees = new Hono()
       // if it occured error, catch error by app.onError as ZodError
       const data = selectEmployeesSchema.parse(_newEmployees);
       return c.json(data, 200);
-    },
+    }
   )
   .delete("/:id", async (c) => {
     const { id } = c.req.param();

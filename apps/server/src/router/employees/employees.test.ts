@@ -14,7 +14,7 @@ import {
 // Seed data
 const seedData: InsertEmployees[] = [
   { name: "Employee 1", department: 1 },
-  { name: "Employee 2", department: 2 },
+  { name: "Employee 2", department: 1 },
   // Add more seed data as needed
 ];
 
@@ -44,7 +44,7 @@ test("POST /employees", async () => {
 
     const mockData = {
       json: {
-        name: "employees-post-test8",
+        name: "employees-post-test",
         department: 1,
       },
     };
