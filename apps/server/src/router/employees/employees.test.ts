@@ -21,26 +21,43 @@ const seedData: InsertEmployees[] = [
 const makeInitDb = async (
   tx: Parameters<Parameters<typeof db.transaction>[0]>[0]
 ) => {
-  await tx.delete(employees).execute();
-  await tx.insert(employees).values(seedData).execute();
+  const res = await testClient(app).employees.$get();
+  await tx.insert(employees).values(seedData);
+  return res.json();
+};
+
+// FIXME
+// impl automaticaly rollback
+const rollbackTransaction = async (
+  tx: Parameters<Parameters<typeof db.transaction>[0]>[0],
+  prev: { results: Employees[] }
+) => {
+  await tx.delete(employees);
+  await tx.insert(employees).values(
+    prev.results.map(({ id, ...args }) => {
+      return { ...args };
+    })
+  );
 };
 
 // GET /employees test
 test("GET /employees", async () => {
   await db.transaction(async (tx) => {
-    makeInitDb(tx);
+    const prev = await makeInitDb(tx);
 
     const res = await testClient(app).employees.$get();
     const json = await res.json();
 
     expect(res.status).toBe(200);
+
+    rollbackTransaction(tx, prev);
   });
 });
 
 // POST /employees test
 test("POST /employees", async () => {
   await db.transaction(async (tx) => {
-    makeInitDb(tx);
+    const prev = await makeInitDb(tx);
 
     const mockData = {
       json: {
@@ -54,6 +71,8 @@ test("POST /employees", async () => {
 
     expect(res.status).toBe(200);
     expect(json.name).toBe(mockData.json.name);
-    expect(json.department).toBe(1);
+    expect(json.department).toBe(mockData.json.department);
+
+    rollbackTransaction(tx, prev);
   });
 });
