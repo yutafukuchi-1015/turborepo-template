@@ -28,7 +28,7 @@ export const employees = new Hono()
     const _employees = await db
       .select()
       .from(employeesTable)
-      .where(eq(employeesTable.id, Number(id)));
+      .where(eq(employeesTable.id as any, Number(id)) as any);
     const _employee = _employees[0];
 
     if (!_employee) {
@@ -73,7 +73,7 @@ export const employees = new Hono()
         await db
           .update(employeesTable)
           .set(body)
-          .where(eq(employeesTable.id, Number(id)))
+          .where(eq(employeesTable.id as any, Number(id)) as any)
           .returning()
       )[0];
 
@@ -84,6 +84,8 @@ export const employees = new Hono()
   )
   .delete("/:id", async (c) => {
     const { id } = c.req.param();
-    await db.delete(employeesTable).where(eq(employeesTable.id, Number(id)));
+    await db
+      .delete(employeesTable)
+      .where(eq(employeesTable.id as any, Number(id)) as any);
     return c.json({ success: true }, 200);
   });
