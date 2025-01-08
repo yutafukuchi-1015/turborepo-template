@@ -46,7 +46,7 @@ function generateApiCode() {
     // ディレクトリが存在しない場合は作成
     mkdirSync(dirPath, { recursive: true });
 
-    let output = `import { client } from "@/server/src";
+    let output = `import { client } from "#api/client";
 
 export const get${baseName} = async () =>
   await (
