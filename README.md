@@ -26,3 +26,9 @@ After `bun generate-api`, script generate api call fn.
 ### /package/db
 
 After `bun pull`, script generate schema table from postgresql.
+
+## TEST
+### /apps/web
+
+1. `pnpm run storybook`
+2. `pnpm run playwright--ui`
