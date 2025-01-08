@@ -31,9 +31,9 @@
     "generate-api": "cd ./api && bun ./generate-api.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "playwright": "exec playwright test",
-    "playwright--ui": "exec playwright test --ui",
-    "playwright-show-report": "exec playwright show-report"
+    "playwright": "playwright test",
+    "playwright--ui": "playwright test --ui",
+    "playwright-show-report": "playwright show-report"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
