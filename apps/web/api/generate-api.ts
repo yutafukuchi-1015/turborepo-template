@@ -11,7 +11,7 @@ function generateApiCode() {
     appFilePath,
     readFileSync(appFilePath, "utf-8"),
     ts.ScriptTarget.Latest,
-    true,
+    true
   );
 
   let routes: { path: string; hasId: boolean }[] = [];
@@ -48,7 +48,7 @@ function generateApiCode() {
 
     let output = `import { client } from "@/server/src";
 
-export const use${baseName} = async () =>
+export const get${baseName} = async () =>
   await (
     await client.${route.path}.$get(undefined, {
       fetch: () =>
@@ -61,7 +61,7 @@ export const use${baseName} = async () =>
 
     // IDパラメータを持つルートの場合
     if (route.hasId) {
-      output += `\n\nexport const useSingle${baseName.slice(0, -1)} = async ({ id }: { id: string }) =>
+      output += `\n\nexport const getSingle${baseName.slice(0, -1)} = async ({ id }: { id: string }) =>
   await (
     await client.${route.path}[":id"].$get({ param: { id } },{
       fetch: () =>
@@ -76,7 +76,7 @@ export const use${baseName} = async () =>
     // 各ルートごとにファイルを生成
     writeFileSync(path.join(dirPath, "api.ts"), output);
     console.log(
-      `Successfully generated API functions in ${path.join(dirPath, "api.ts")}`,
+      `Successfully generated API functions in ${path.join(dirPath, "api.ts")}`
     );
   });
 }
