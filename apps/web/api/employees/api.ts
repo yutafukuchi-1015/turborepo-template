@@ -1,4 +1,4 @@
-import { client } from "@/server/src";
+import { client } from "#api/client";
 
 export const useEmployees = async () =>
   await (

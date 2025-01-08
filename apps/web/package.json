@@ -12,6 +12,10 @@
       "storybook": "./api/departments/api.mock.ts",
       "default": "./api/departments/api.ts"
     },
+    "#api/client": {
+      "storybook": "./api/client.mock.ts",
+      "default": "./api/client.ts"
+    },
     "#*": [
       "./*",
       "./*.ts",
