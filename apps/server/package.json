@@ -13,13 +13,17 @@
   "dependencies": {
     "@repo/db": "workspace:*",
     "dotenv": "^16.4.7",
-    "drizzle-orm": "^0.38.2",
+    "drizzle-orm": "^0.38.3",
+    "pg": "^8.13.1",
     "hono": "^4.6.15"
   },
   "devDependencies": {
     "@hono/zod-validator": "^0.4.2",
-    "typescript": "5.5.4",
+    "@types/node": "^22.10.2",
+    "@types/pg": "^8.11.10",
     "bun-types": "1.0.11",
+    "typescript": "5.5.4",
+    "tsx": "^4.19.2",
     "zod": "^3.24.1"
   }
 }
