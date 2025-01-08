@@ -6,13 +6,13 @@ import { app } from "../../index";
 import { db } from "@repo/db";
 import {
   departments,
-  Employees,
+  Employee,
   employees,
-  InsertEmployees,
+  InsertEmployee,
 } from "@repo/db/src/schema";
 
 // Seed data
-const seedData: InsertEmployees[] = [
+const seedData: InsertEmployee[] = [
   { name: "Employee 1", department: 1 },
   { name: "Employee 2", department: 1 },
   // Add more seed data as needed
@@ -30,7 +30,7 @@ const makeInitDb = async (
 // impl automaticaly rollback
 const rollbackTransaction = async (
   tx: Parameters<Parameters<typeof db.transaction>[0]>[0],
-  prev: { results: Employees[] }
+  prev: { results: Employee[] }
 ) => {
   await tx.delete(employees);
   await tx.insert(employees).values(

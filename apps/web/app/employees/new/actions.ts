@@ -1,6 +1,6 @@
 "use server";
 import { client } from "@/server/src";
-import { insertEmployeesSchema } from "@repo/db/src/schema/employees/validation";
+import { insertEmployeeSchema } from "@repo/db/src/schema/employees/validation";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { ZodIssue } from "zod";
@@ -12,9 +12,9 @@ export type ActionState = {
 
 export const createEmployee = async (
   prevState: ActionState,
-  formData: FormData,
+  formData: FormData
 ): Promise<ActionState> => {
-  const schema = insertEmployeesSchema;
+  const schema = insertEmployeeSchema;
   const parse = schema.safeParse({
     name: formData.get("name"),
     department: formData.get("department"),

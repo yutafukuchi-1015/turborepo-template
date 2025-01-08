@@ -10,15 +10,15 @@ import {
   TableRow,
 } from "@repo/ui";
 import Link from "next/link";
-import { Employees, Departments } from "@repo/db/src/schema/index";
+import { Employee, Department } from "@repo/db/src/schema/index";
 import { getLabelById } from "@/web/lib/form";
 
 export const EmployeesTable = ({
   employees,
   departments,
 }: {
-  employees: { results: Employees[] };
-  departments: Departments[];
+  employees: { results: Employee[] };
+  departments: Department[];
 }) => {
   return (
     <Table>

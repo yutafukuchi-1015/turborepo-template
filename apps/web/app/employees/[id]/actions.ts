@@ -3,7 +3,7 @@ import { client } from "@/server/src";
 import { ZodIssue } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { insertEmployeesSchema } from "@repo/db/src/schema/employees/validation";
+import { insertEmployeeSchema } from "@repo/db/src/schema/employees/validation";
 
 export type ActionState = {
   errors: ZodIssue[] | undefined;
@@ -13,9 +13,9 @@ export type ActionState = {
 export const updateEmployee = async (
   id: number,
   prevState: ActionState,
-  formData: FormData,
+  formData: FormData
 ): Promise<ActionState> => {
-  const schema = insertEmployeesSchema;
+  const schema = insertEmployeeSchema;
 
   const parse = schema.safeParse({
     name: formData.get("name"),

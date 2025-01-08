@@ -6,9 +6,9 @@ import { zValidator } from "@hono/zod-validator";
 import { db } from "@repo/db";
 import { employees as employeesTable } from "@repo/db/src/schema";
 import {
-  insertEmployeesSchema,
-  selectEmployeesSchema,
-  Employees,
+  insertEmployeeSchema,
+  selectEmployeeSchema,
+  Employee,
 } from "@repo/db/src/schema/employees/validation";
 
 export const employees = new Hono()
@@ -17,7 +17,7 @@ export const employees = new Hono()
 
     // if it occured error, catch error by app.onError as ZodError
     const data = z
-      .array<ZodType<Employees>>(selectEmployeesSchema as any)
+      .array<ZodType<Employee>>(selectEmployeeSchema as any)
       .parse(_employees); // FIXME any
 
     //FIXME impl Pagination
@@ -36,13 +36,13 @@ export const employees = new Hono()
     }
 
     // if it occured error, catch error by app.onError as ZodError
-    const data = selectEmployeesSchema.parse(_employee);
+    const data = selectEmployeeSchema.parse(_employee);
 
     return c.json({ ...data }, 200);
   })
   .post(
     "/",
-    zValidator("json", insertEmployeesSchema as any, (result, c) => {
+    zValidator("json", insertEmployeeSchema as any, (result, c) => {
       if (!result.success) {
         throw new HTTPException(400, { cause: result.error });
       }
@@ -54,14 +54,14 @@ export const employees = new Hono()
       )[0];
 
       // if it occured error, catch error by app.onError as ZodError
-      const data = selectEmployeesSchema.parse(_newEmployees);
+      const data = selectEmployeeSchema.parse(_newEmployees);
 
       return c.json(data, 200);
     }
   )
   .put(
     "/:id",
-    zValidator("json", insertEmployeesSchema as any, (result, c) => {
+    zValidator("json", insertEmployeeSchema as any, (result, c) => {
       if (!result.success) {
         throw new HTTPException(400, { cause: result.error });
       }
@@ -78,7 +78,7 @@ export const employees = new Hono()
       )[0];
 
       // if it occured error, catch error by app.onError as ZodError
-      const data = selectEmployeesSchema.parse(_newEmployees);
+      const data = selectEmployeeSchema.parse(_newEmployees);
       return c.json(data, 200);
     }
   )

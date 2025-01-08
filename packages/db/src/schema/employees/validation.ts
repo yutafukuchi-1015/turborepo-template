@@ -7,10 +7,10 @@ const extendSchema = z.object({
   department: z.preprocess((v) => Number(v), z.number()),
 });
 
-export const insertEmployeesSchema =
+export const insertEmployeeSchema =
   createInsertSchema(employees).merge(extendSchema);
-export const selectEmployeesSchema =
+export const selectEmployeeSchema =
   createSelectSchema(employees).merge(extendSchema);
 
-export type InsertEmployees = z.infer<typeof insertEmployeesSchema>;
-export type Employees = z.infer<typeof selectEmployeesSchema>;
+export type InsertEmployee = z.infer<typeof insertEmployeeSchema>;
+export type Employee = z.infer<typeof selectEmployeeSchema>;

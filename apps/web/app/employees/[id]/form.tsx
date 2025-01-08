@@ -2,19 +2,19 @@
 
 import React, { useActionState } from "react";
 import { Button, Label } from "@repo/ui";
-import { Employees } from "@repo/db/src/schema/employees/validation";
+import { Employee } from "@repo/db/src/schema/employees/validation";
 import { updateEmployee, deleteEmployee } from "./actions";
 import { ZodIssue } from "zod";
 import { InputWrapper } from "@/web/components/input-wrapper";
 import { SelectWrapper } from "@/web/components/select-wrapper";
-import { Departments } from "@repo/db/src/schema";
+import { Department } from "@repo/db/src/schema";
 
 export const Form = ({
   singleEmployee,
   departments,
 }: {
-  singleEmployee: Employees;
-  departments: Departments[];
+  singleEmployee: Employee;
+  departments: Department[];
 }) => {
   const [state, formAction] = useActionState<
     { errors: ZodIssue[] | undefined; formData: FormData | undefined },
