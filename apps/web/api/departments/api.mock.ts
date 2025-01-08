@@ -5,6 +5,6 @@ import { Department } from "@repo/db/src/schema";
 export * from "./api";
 
 // when use mock api, check apps/web/api/employees/api.ts and comment-in code
-export const useDepartments: Mock<() => Promise<Department[]>> = fn(
-  actual.useDepartments
-).mockName("useDepartments");
+export const getDepartments: Mock<() => Promise<Department[]>> = fn(
+  actual.getDepartments
+).mockName("getDepartments");

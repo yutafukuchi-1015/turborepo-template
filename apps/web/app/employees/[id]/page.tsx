@@ -1,8 +1,8 @@
 import React from "react";
 import { client } from "@/server/src/index";
 import { Form } from "./form";
-import { useDepartments } from "@/web/api/departments/api";
-import { useSingleEmployee } from "@/web/api/employees/api";
+import { getDepartments } from "@/web/api/departments/api";
+import { getSingleEmployee } from "@/web/api/employees/api";
 
 export default async function EmployeesPage({
   params,
@@ -11,8 +11,8 @@ export default async function EmployeesPage({
 }) {
   const { id } = await params;
 
-  const singleEmployee = await useSingleEmployee({ id });
-  const departments = await useDepartments();
+  const singleEmployee = await getSingleEmployee({ id });
+  const departments = await getDepartments();
 
   return <Form singleEmployee={singleEmployee} departments={departments} />;
 }

@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 
 import EmployeesPage from "@/web/app/employees/(overview)/page";
-import { useEmployees } from "#api/employees/api.mock";
-import { useDepartments } from "#api/departments/api.mock";
+import { getEmployees } from "#api/employees/api.mock";
+import { getDepartments } from "#api/departments/api.mock";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -28,7 +28,7 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {},
   beforeEach: async () => {
-    useEmployees.mockResolvedValue(
+    getEmployees.mockResolvedValue(
       new Promise((resolve, _) => {
         resolve({
           results: [
@@ -46,7 +46,7 @@ export const Primary: Story = {
       }) as any
     );
 
-    useDepartments.mockResolvedValue(
+    getDepartments.mockResolvedValue(
       new Promise((resolve, _) => {
         resolve([{ id: 1, label: "departments1" }]);
       }) as any

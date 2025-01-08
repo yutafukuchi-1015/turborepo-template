@@ -2,12 +2,12 @@ import React from "react";
 import { EmployeesTable } from "../_components/employees-table";
 import { Button } from "@repo/ui";
 import Link from "next/link";
-import { useEmployees } from "#api/employees/api";
-import { useDepartments } from "#api/departments/api";
+import { getEmployees } from "#api/employees/api";
+import { getDepartments } from "#api/departments/api";
 
 export default async function EmployeesPage() {
-  const employees = await useEmployees();
-  const departments = await useDepartments();
+  const employees = await getEmployees();
+  const departments = await getDepartments();
 
   return (
     <div>

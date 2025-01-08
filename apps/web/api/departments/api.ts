@@ -1,6 +1,6 @@
-import { client } from "#api/client";
+import { client } from "@/server/src";
 
-export const useDepartments = async () =>
+export const getDepartments = async () =>
   await (
     await client.departments.$get(undefined, {
       fetch: () =>
@@ -10,7 +10,3 @@ export const useDepartments = async () =>
         }),
     })
   ).json();
-
-// FIXME rm below code
-// when use storybook, comment-in instead of abobe code
-// export const useDepartments = async () => {};
