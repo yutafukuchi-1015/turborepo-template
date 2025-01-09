@@ -16,10 +16,6 @@ export const updateEmployee = async (
   prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> => {
-  // FIXME
-  // apps\web\app\employees\[id]\actions.ts
-  // Error, when use insertEmployeeSchema
-  // const schema = z.object({ name: z.string(), departments: z.number() });
   const schema = insertEmployeeSchema;
 
   const parse = schema.safeParse({
@@ -37,11 +33,11 @@ export const updateEmployee = async (
       param: { id: String(id) },
     });
     revalidatePath("/employees");
+    redirect("/employees");
+    return { errors: [] as ZodIssue[], formData }; // for storybook
   } catch (error) {
     throw new Error("Failed to update employee");
   }
-
-  redirect("/employees");
 };
 
 export const deleteEmployee = async (id: number) => {
