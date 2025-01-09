@@ -1,5 +1,5 @@
 "use server";
-import { client } from "@/server/src";
+import { client } from "#api/client";
 import { insertEmployeeSchema } from "@repo/db/src/schema/employees/validation";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";

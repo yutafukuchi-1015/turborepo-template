@@ -1,10 +1,9 @@
 import React from "react";
-import { client } from "@/server/src/index";
 import { Form } from "./form";
-import { getDepartments } from "@/web/api/departments/api";
-import { getSingleEmployee } from "@/web/api/employees/api";
+import { getDepartments } from "#api/departments/api";
+import { getSingleEmployee } from "#api/employees/api";
 
-export default async function EmployeesPage({
+export default async function EmployeePage({
   params,
 }: {
   params: Promise<{ id: string }>;

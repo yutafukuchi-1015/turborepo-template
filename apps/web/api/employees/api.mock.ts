@@ -4,7 +4,10 @@ import { Employee } from "@repo/db/src/schema";
 
 export * from "./api";
 
-// when use mock api, check apps/web/api/employees/api.ts and comment-in code
 export const getEmployees: Mock<() => Promise<{ results: Employee[] }>> = fn(
   actual.getEmployees
 ).mockName("getEmployees");
+
+export const getSingleEmployee: Mock<() => Promise<Employee>> = fn(
+  actual.getSingleEmployee
+).mockName("getSingleEmployee");

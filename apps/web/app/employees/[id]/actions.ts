@@ -1,9 +1,10 @@
 "use server";
-import { client } from "@/server/src";
-import { ZodIssue } from "zod";
+import { client } from "#api/client";
+import { z, ZodIssue } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { insertEmployeeSchema } from "@repo/db/src/schema/employees/validation";
+import { departments } from "@repo/db/src/schema";
 
 export type ActionState = {
   errors: ZodIssue[] | undefined;
@@ -15,6 +16,10 @@ export const updateEmployee = async (
   prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> => {
+  // FIXME
+  // apps\web\app\employees\[id]\actions.ts
+  // Error, when use insertEmployeeSchema
+  // const schema = z.object({ name: z.string(), departments: z.number() });
   const schema = insertEmployeeSchema;
 
   const parse = schema.safeParse({

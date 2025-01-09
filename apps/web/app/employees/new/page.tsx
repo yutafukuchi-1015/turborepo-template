@@ -1,5 +1,4 @@
 import React from "react";
-import { client } from "@/server/src/index";
 import { Form } from "./form";
 import { getDepartments } from "@/web/api/departments/api";
 
