@@ -1,6 +1,7 @@
 import { integer, timestamp } from "drizzle-orm/pg-core";
+import { z } from "zod";
 
-export const commonSchema = () => {
+export const commonColumns = () => {
   return {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     createdAt: timestamp("created_at", { mode: "string" }).defaultNow(),
@@ -9,3 +10,23 @@ export const commonSchema = () => {
     version: integer(),
   };
 };
+
+const commonSchema = z.object({
+  createdAt: z.string().optional(),
+  updatedAt: z.string().optional(),
+  deletedAt: z.string().optional(),
+});
+
+export const commonInsertSchema = z
+  .object({
+    id: z.number().optional(),
+    version: z.number().optional(),
+  })
+  .merge(commonSchema);
+
+export const commonUpdateSchema = z
+  .object({
+    id: z.number(),
+    version: z.number(),
+  })
+  .merge(commonSchema);

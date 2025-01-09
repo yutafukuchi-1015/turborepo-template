@@ -1,12 +1,12 @@
 import { foreignKey, integer, pgTable, varchar } from "drizzle-orm/pg-core";
-import { commonSchema } from "../utils";
+import { commonColumns } from "../utils";
 import { departments } from "../index";
 import { relations } from "drizzle-orm";
 
 export const employees = pgTable(
   "EMPLOYEES",
   {
-    ...commonSchema(),
+    ...commonColumns(),
     name: varchar({ length: 255 }).notNull(),
     department: integer(),
   },
@@ -18,7 +18,7 @@ export const employees = pgTable(
     })
       .onUpdate("cascade")
       .onDelete("cascade"),
-  ],
+  ]
 );
 
 export const employeesRelations = relations(employees, ({ one }) => ({

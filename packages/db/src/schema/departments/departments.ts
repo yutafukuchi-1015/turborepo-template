@@ -1,10 +1,10 @@
 import { pgTable, text } from "drizzle-orm/pg-core";
-import { commonSchema } from "../utils";
+import { commonColumns } from "../utils";
 import { employees } from "../employees/employees";
 import { relations } from "drizzle-orm";
 
 export const departments = pgTable("DEPARTMENTS", {
-  ...commonSchema(),
+  ...commonColumns(),
   label: text().notNull(),
 });
 
