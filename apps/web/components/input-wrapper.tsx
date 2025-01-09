@@ -16,6 +16,10 @@ export const InputWrapper = <T,>({
   defaultValue,
   ...props
 }: Props<T>) => {
+  const message = errorMessage({
+    errors,
+    name,
+  });
   return (
     <>
       <Input
@@ -32,13 +36,8 @@ export const InputWrapper = <T,>({
           name,
         })}
       />
-      {errors !== undefined && (
-        <p className="text-red-500 text-sm font-medium">
-          {errorMessage({
-            errors,
-            name,
-          })}
-        </p>
+      {message !== undefined && (
+        <p className="text-red-500 text-sm font-medium">{message}</p>
       )}
     </>
   );
