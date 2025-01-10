@@ -8,6 +8,7 @@ import { ZodIssue } from "zod";
 import { InputWrapper } from "@/web/components/input-wrapper";
 import { SelectWrapper } from "@/web/components/select-wrapper";
 import { Department } from "@repo/db/src/schema";
+import { createOptions } from "@/web/lib/form";
 
 export const Form = ({
   singleEmployee,
@@ -51,13 +52,7 @@ export const Form = ({
               formData={state.formData}
               errors={state.errors}
               defaultValue={String(singleEmployee.department)}
-              //FIXME make options creator fn
-              options={departments.map((department) => {
-                return {
-                  label: department.label,
-                  value: String(department.id),
-                };
-              })}
+              options={createOptions({ response: departments })}
             />
           </div>
         </div>
