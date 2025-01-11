@@ -13,9 +13,22 @@ import {
 
 // Seed data
 const seedData: InsertEmployee[] = [
-  { name: "Employee 1", department: 1 },
-  { name: "Employee 2", department: 1 },
-  // Add more seed data as needed
+  {
+    name: "Employee 1",
+    department: 1,
+    version: 1,
+    createdAt: null,
+    updatedAt: null,
+    deletedAt: null,
+  },
+  {
+    name: "Employee 2",
+    department: 1,
+    version: 1,
+    createdAt: null,
+    updatedAt: null,
+    deletedAt: null,
+  },
 ];
 
 const makeInitDb = async (
@@ -59,9 +72,9 @@ test("POST /employees", async () => {
 
     const mockData = {
       json: {
-        name: "employees-post-test",
+        name: "Employee 3",
         department: 1,
-      },
+      } satisfies InsertEmployee,
     };
 
     const res = await testClient(app).employees.$post(mockData);
@@ -81,20 +94,19 @@ test("PUT /employees", async () => {
 
     const prevData = {
       json: {
-        name: "employees-post-test-prev",
+        name: "Employee 3",
         department: 1,
-      },
+      } satisfies InsertEmployee,
     };
     const expectedData = {
       json: {
-        name: "employees-post-test-expected",
+        name: "Employee 4",
         department: 1,
-      },
+      } satisfies InsertEmployee,
     };
 
     const postedMockData = await testClient(app).employees.$post(prevData);
     const deserializedPostedMockData = await postedMockData.json();
-    console.log("deserializedPostedMockData", deserializedPostedMockData);
     const res = await testClient(app).employees[":id"].$put({
       json: expectedData.json,
       param: { id: String(deserializedPostedMockData.id) },
@@ -104,6 +116,7 @@ test("PUT /employees", async () => {
     expect(res.status).toBe(200);
     expect(json.name).toBe(expectedData.json.name);
     expect(json.department).toBe(expectedData.json.department);
+    expect(json.version).toBe(2);
 
     rollbackTransaction(tx, prev);
   });
@@ -114,9 +127,9 @@ test("DELETE /employees", async () => {
     const prev = await makeInitDb(tx);
     const mockData = {
       json: {
-        name: "employees-post-test",
+        name: "Employee 3",
         department: 1,
-      },
+      } satisfies InsertEmployee,
     };
     const postedMockData = await testClient(app).employees.$post(mockData);
     const deserializedPostedMockData = await postedMockData.json();

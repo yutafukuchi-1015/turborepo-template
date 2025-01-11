@@ -10,6 +10,7 @@ import {
   selectEmployeeSchema,
   Employee,
 } from "@repo/db/src/schema/employees/validation";
+import { increment } from "../utils";
 
 export const employees = new Hono()
   .get("/", async (c) => {
@@ -72,7 +73,7 @@ export const employees = new Hono()
       const _newEmployees = (
         await db
           .update(employeesTable)
-          .set(body)
+          .set({ ...body, version: increment(employeesTable.version) })
           .where(eq(employeesTable.id as any, Number(id)) as any)
           .returning()
       )[0];

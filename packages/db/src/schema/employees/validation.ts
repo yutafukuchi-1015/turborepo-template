@@ -5,7 +5,10 @@ import { commonInsertSchema, commonUpdateSchema } from "../utils";
 
 const extendSchema = z.object({
   name: z.string().min(1).max(255),
-  department: z.preprocess((v) => Number(v), z.number()),
+  department: z.preprocess(
+    (v) => (v === null ? null : Number(v)),
+    z.number().nullable()
+  ),
 });
 
 export const insertEmployeeSchema = commonInsertSchema.merge(extendSchema);
