@@ -33,11 +33,11 @@ export const updateEmployee = async (
       param: { id: String(id) },
     });
     revalidatePath("/employees");
-    redirect("/employees");
-    return { errors: [] as ZodIssue[], formData }; // for storybook
   } catch (error) {
     throw new Error("Failed to update employee");
   }
+  redirect("/employees");
+  return { errors: [] as ZodIssue[], formData }; // for storybook
 };
 
 export const deleteEmployee = async (id: number) => {
